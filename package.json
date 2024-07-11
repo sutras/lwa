@@ -1,6 +1,6 @@
 {
   "name": "lwa",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "轻量级动画库",
   "type": "module",
   "main": "./dist/lwa.js",
@@ -36,8 +36,13 @@
   ],
   "author": "wuzhitao",
   "license": "MIT",
-  "homepage": "https://github.com/sutras/tel-area-code",
+  "homepage": "https://github.com/sutras/lwa",
   "repository": {
-    "url": "git+https://github.com/sutras/tel-area-code.git"
-  }
+    "url": "git+https://github.com/sutras/lwa.git"
+  },
+  "keywords": [
+    "animation",
+    "animate",
+    "动画"
+  ]
 }
