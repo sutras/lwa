@@ -77,7 +77,6 @@ watch(
   () => {
     if (active.value) {
       appStore.timeline = props.timeline;
-      props.timeline?.restart();
     }
   },
   {

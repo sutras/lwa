@@ -23,6 +23,7 @@ useLwaContext(() => {
     },
     {
       autoplay: false,
+      duration: 1000,
       loop: Infinity,
     }
   ));
