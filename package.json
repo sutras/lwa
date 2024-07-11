@@ -1,0 +1,43 @@
+{
+  "name": "lwa",
+  "version": "0.1.0",
+  "description": "轻量级动画库",
+  "type": "module",
+  "main": "./dist/lwa.js",
+  "module": "./dist/lwa.js",
+  "types": "./dist/lwa.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build:docs": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "deploy": "node deploy.js",
+    "buildDocsAndDeploy": "npm run build:docs && npm run deploy",
+    "build:dts": "tsc -p tsconfig.lib.json && api-extractor run --local --verbose",
+    "build:lib": "node build-lib.js && npm run build:dts"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.47.0",
+    "@types/node": "^20.14.9",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "consola": "^3.2.3",
+    "gh-pages": "^6.1.1",
+    "lodash-es": "^4.17.21",
+    "pinia": "^2.1.7",
+    "terser": "^5.31.1",
+    "typescript": "^5.5.2",
+    "unplugin-vue-markdown": "^0.26.2",
+    "vite": "^5.3.1",
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.0",
+    "vue-tsc": "^2.0.21"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "wuzhitao",
+  "license": "MIT",
+  "homepage": "https://github.com/sutras/tel-area-code",
+  "repository": {
+    "url": "git+https://github.com/sutras/tel-area-code.git"
+  }
+}
