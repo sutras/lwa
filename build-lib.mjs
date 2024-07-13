@@ -13,14 +13,9 @@ const sharedOptions = {
   build: {
     target: "es2015",
     lib: {
-      // entry,
       name,
-      fileName: (format, entryName) => {
-        if (entryName === "main") {
-          return `${name}.js`;
-        }
-        return `${name}.${format}.js`;
-      },
+      // entry,
+      // fileName,
       // formats,
     },
     minify: "terser",
@@ -48,8 +43,11 @@ await build(
   merge({}, sharedOptions, {
     build: {
       lib: {
-        entry: path.resolve(__dirname, "src/lib/index.ts"),
-        formats: ["es", "umd"],
+        entry: path.resolve(__dirname, "src/lib/main.ts"),
+        formats: ["es", "cjs"],
+        fileName: (format) => {
+          return `${name}.${format === "es" ? "mjs" : "cjs"}`;
+        },
       },
     },
   })
@@ -59,8 +57,25 @@ await build(
   merge({}, sharedOptions, {
     build: {
       lib: {
-        entry: path.resolve(__dirname, "src/lib/main.ts"),
+        entry: path.resolve(__dirname, "src/lib/index.ts"),
+        formats: ["es", "umd"],
+        fileName: (format) => {
+          return `${name}.full.${format}.js`;
+        },
+      },
+    },
+  })
+);
+
+await build(
+  merge({}, sharedOptions, {
+    build: {
+      lib: {
+        entry: path.resolve(__dirname, "src/lib/index.slim.ts"),
         formats: ["es"],
+        fileName: (format) => {
+          return `${name}.slim.js`;
+        },
       },
     },
   })

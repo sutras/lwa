@@ -17,6 +17,7 @@ import {
   type Direction,
 } from "./common";
 import {
+  type Timeline,
   type TimelineOptions,
   type TimelineEvent,
   type TimelineEventTarget,
@@ -60,6 +61,7 @@ export {
   type Easings,
   type Properties,
   type TweenOptions,
+  type Timeline,
   type TimelineOptions,
   type SpecialValue,
   type SVGValue,

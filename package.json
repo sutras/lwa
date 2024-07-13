@@ -1,19 +1,39 @@
 {
   "name": "lwa",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "轻量级动画库",
-  "type": "module",
-  "main": "./dist/lwa.js",
-  "module": "./dist/lwa.js",
+  "main": "./dist/lwa.cjs",
+  "module": "./dist/lwa.mjs",
   "types": "./dist/lwa.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lwa.d.ts",
+      "node": {
+        "import": {
+          "production": "./dist/lwa.mjs",
+          "development": "./dist/lwa.mjs",
+          "default": "./dist/lwa.mjs"
+        },
+        "require": {
+          "production": "./dist/lwa.cjs",
+          "development": "./dist/lwa.cjs",
+          "default": "./dist/lwa.cjs"
+        }
+      },
+      "import": "./dist/lwa.mjs",
+      "require": "./dist/lwa.cjs"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "vite",
     "build:docs": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "deploy": "node deploy.js",
+    "deploy": "node deploy.mjs",
     "buildDocsAndDeploy": "npm run build:docs && npm run deploy",
-    "build:dts": "tsc -p tsconfig.lib.json && api-extractor run --local --verbose",
-    "build:lib": "node build-lib.js && npm run build:dts"
+    "build:dts": "node build-dts.mjs",
+    "build:lib": "node build-lib.mjs && npm run build:dts"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.47.0",

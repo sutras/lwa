@@ -358,7 +358,10 @@ function createTimeline(options?: TimelineOptions) {
   return timeline;
 }
 
+type Timeline = ReturnType<typeof createTimeline>;
+
 export {
+  type Timeline,
   type TimelineEventTarget,
   type TimelineEvent,
   type TimelineOptions,
