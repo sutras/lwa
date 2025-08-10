@@ -1,0 +1,13 @@
+@import "prismjs/themes/prism-tomorrow.css";
+
+pre[class*="language-"] {
+  margin: 0;
+  background-color: transparent !important;
+}
+
+div[class*="language-"] {
+  position: relative;
+  margin-bottom: 16px;
+  border-radius: var(--lw-rounded-lg);
+  background-color: var(--lw-primary-bg-subtle);
+}

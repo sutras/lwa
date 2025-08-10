@@ -5,7 +5,7 @@
         <svg width="140" height="140" viewBox="0 0 140 140">
           <g fill="none" fill-rule="evenodd">
             <g
-              fill="var(--primary-color)"
+              fill="var(--lw-primary)"
               fill-opacity=".15"
               transform="translate(0 6)"
             >
@@ -25,7 +25,7 @@
             <polygon
               class="polymorph"
               stroke-width="1"
-              stroke="var(--primary-color)"
+              stroke="var(--lw-primary)"
               points="70 24 119.574 60.369 100.145 117.631 50.855 101.631 3.426 54.369"
             ></polygon>
           </g>
@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import lwa from "@/lib";
+import lwa from "lwa";
 import { useLwaContext } from "@/useLwaContext";
 import Demo from "@/components/Demo.vue";
 

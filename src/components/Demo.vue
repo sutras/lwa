@@ -1,5 +1,5 @@
 <template>
-  <div class="demo" :class="{ active }" ref="demoRef" @click="onClick">
+  <div ref="demoRef" class="demo" :class="{ active }" @click="onClick">
     <div class="demo-title">{{ title }}</div>
     <div class="demo-content">
       <slot></slot>
@@ -8,13 +8,13 @@
 </template>
 
 <script lang="ts" setup>
-import lwa from "@/lib";
+import { Timeline } from "@/lib";
 import { useAppStore } from "@/store/modules/app";
 import { computed, nextTick, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps<{
-  timeline?: ReturnType<typeof lwa>;
+  timeline?: Timeline;
   name: string;
 }>();
 
@@ -93,7 +93,11 @@ watch(active, () => {
 
 const onClick = (event: MouseEvent) => {
   props.timeline?.restart();
-  router.push({ name: props.name });
+
+  if (route.name !== props.name) {
+    router.push({ name: props.name });
+  }
+
   scrollToTop();
 
   emit("click", event);
@@ -106,7 +110,7 @@ const onClick = (event: MouseEvent) => {
   cursor: pointer;
 
   &.active {
-    background-color: var(--active-bg-color);
+    background-color: var(--lw-primary-bg-subtle);
   }
 }
 .demo-title {
@@ -114,7 +118,7 @@ const onClick = (event: MouseEvent) => {
   align-items: center;
   height: var(--nav-height);
   padding: 0 1rem;
-  font-size: var(--text-lg);
+  font-size: var(--lw-text-lg);
   text-align: left;
 }
 .demo-content {

@@ -1,0 +1,20 @@
+:root {
+  --lw-primary: #f87171;
+  --lw-primary-rgb: 248, 113, 113;
+  --lw-primary-bg-subtle: #382a2a;
+  --lw-primary-border-subtle: #2e1919;
+  --lw-gemel: #10b981;
+  --lw-body-bg: hsl(0, 5%, 15%);
+  --lw-border-color: hsl(0, 10%, 1%);
+  --lw-text-xs: 10px;
+  --lw-text-sm: 12px;
+  --lw-text-base: 14px;
+  --lw-text-lg: 16px;
+  --lw-text-xl: 20px;
+  --lw-text-2xl: 24px;
+  --lw-text-3xl: 30px;
+  --lw-text-color: #bbbaa6;
+  --lw-rounded-sm: 2px;
+  --lw-rounded: 4px;
+  --lw-rounded-lg: 6px;
+}

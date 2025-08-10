@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts" setup>
-import lwa from "@/lib";
-import { type Tween } from "@/lib/common";
+import lwa from "lwa";
 import { useAppStore } from "@/store/modules/app";
+import { type Tween } from "@/lib";
 
 defineProps<{
   tween: Tween;
@@ -35,7 +35,7 @@ const getTweenStyle = (tween: Tween) => {
     color:
       target instanceof HTMLElement
         ? lwa.css(target, "backgroundColor")
-        : "var(--primary-color)",
+        : "var(--lw-primary)",
   };
 };
 const getWidthStyle = (time: number) => {

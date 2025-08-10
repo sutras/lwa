@@ -14,5 +14,5 @@
     "outDir": "temp",
     "rootDir": "src/lib"
   },
-  "include": ["src/lib/main.ts"]
+  "include": ["src/lib/index.ts"]
 }

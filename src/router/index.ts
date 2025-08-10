@@ -9,16 +9,43 @@ import { type App } from "vue";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: { name: "target" },
+    redirect: { name: "start" },
     component: () => import("@/components/Layout.vue"),
     children: [
+      {
+        path: "start",
+        name: "start",
+        redirect: { name: "CssSelector" },
+        component: () => import("@/components/Empty.vue"),
+        meta: {
+          title: "开始",
+        },
+        children: [
+          {
+            path: "install",
+            name: "install",
+            component: () => import("@/docs/start/install.md"),
+            meta: {
+              title: "安装",
+            },
+          },
+          {
+            path: "imports",
+            name: "imports",
+            component: () => import("@/docs/start/imports.md"),
+            meta: {
+              title: "导入",
+            },
+          },
+        ],
+      },
       {
         path: "target",
         name: "target",
         redirect: { name: "CssSelector" },
         component: () => import("@/components/Empty.vue"),
         meta: {
-          title: "target",
+          title: "对象",
         },
         children: [
           {

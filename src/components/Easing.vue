@@ -6,7 +6,7 @@
         <g>
           <rect x="0" y="0" width="100" height="100" />
           <path :d="d" ref="path" />
-          <circle cx="110" :cy="cy" r="5" fill="var(--primary-color)"></circle>
+          <circle cx="110" :cy="cy" r="5" fill="var(--lw-primary)"></circle>
         </g>
       </svg>
     </div>
@@ -15,11 +15,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import lwa from "@/lib";
+import lwa from "lwa";
 import { useLwaContext } from "@/useLwaContext";
+import { Easings } from "@/lib";
 
 const props = defineProps<{
-  name: keyof typeof lwa.easings;
+  name: keyof Easings;
 }>();
 
 const timeline = ref<ReturnType<typeof lwa>>();
@@ -76,7 +77,7 @@ const onClick = () => {
 
 .easing-name {
   margin-bottom: 4px;
-  font-size: var(--text-sm);
+  font-size: var(--lw-text-sm);
   text-align: center;
 }
 .easing-content {
@@ -102,10 +103,10 @@ const onClick = () => {
   path {
     fill: none;
     stroke-width: 1;
-    stroke: var(--primary-color);
+    stroke: var(--lw-primary);
   }
   rect {
-    fill: var(--active-bg-color);
+    fill: var(--lw-primary-bg-subtle);
   }
 }
 </style>

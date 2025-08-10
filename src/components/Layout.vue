@@ -15,12 +15,7 @@
           {{ route.meta.title }}
         </div>
         <a class="github" target="_blank" href="https://github.com/sutras/lwa">
-          <svg viewBox="0 0 16 16" width="1em" height="1em">
-            <path
-              fill="currentColor"
-              d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
-            />
-          </svg>
+          <SvgIcon name="github" />
           <span>Github</span>
         </a>
       </div>
@@ -28,6 +23,7 @@
         <Timeline></Timeline>
         <div class="docs-body">
           <router-view></router-view>
+          <Pagination />
         </div>
       </div>
     </div>
@@ -41,6 +37,8 @@ import FPS from "./FPS.vue";
 import Menu from "./Menu.vue";
 import Timeline from "@/components/timeline/Timeline.vue";
 import { useRoute } from "vue-router";
+import Pagination from "./Pagination.vue";
+import SvgIcon from "./SvgIcon.vue";
 
 const route = useRoute();
 </script>
@@ -52,7 +50,7 @@ const route = useRoute();
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-  background-color: var(--bg-color);
+  background-color: var(--lw-body-bg);
   --sidebar-width: 220px;
   --nav-height: 56px;
 }
@@ -66,7 +64,6 @@ const route = useRoute();
   flex-direction: column;
   width: var(--sidebar-width);
   margin-top: var(--nav-height);
-  border-right: 1px solid var(--border-color);
 }
 
 @media (max-width: 1100px) {
@@ -97,10 +94,10 @@ const route = useRoute();
   justify-content: center;
   align-items: center;
   height: var(--nav-height);
-  border-bottom: 1px solid var(--border-color);
-  font-size: var(--text-lg);
+  border-bottom: 1px solid var(--lw-border-color);
+  font-size: var(--lw-text-lg);
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--lw-primary);
 
   img {
     height: 40px;
@@ -119,14 +116,15 @@ const route = useRoute();
   }
 }
 .docs-header {
+  flex: none;
   display: flex;
   align-items: center;
   height: var(--nav-height);
   padding: 0 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--lw-border-color);
 }
 .docs-title {
-  color: var(--primary-color);
+  color: var(--lw-primary);
 }
 .github {
   display: flex;
@@ -142,10 +140,15 @@ const route = useRoute();
 }
 .docs-content {
   flex: 1;
-  overflow-x: hidden;
-  overflow-y: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 .docs-body {
+  flex: 1;
+  min-height: 0;
   padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 </style>

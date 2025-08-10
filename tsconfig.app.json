@@ -24,7 +24,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "lwa": ["./src/lib/index.full.ts"]
     },
 
     "types": ["vue-router/dist/vue-router.d.ts"]

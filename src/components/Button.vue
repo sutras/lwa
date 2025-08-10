@@ -20,15 +20,15 @@ const onClick = (event: MouseEvent) => {
   align-items: center;
   height: 28px;
   padding: 0 0.5rem;
-  font-size: var(--text-base);
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  font-size: var(--lw-text-base);
+  color: var(--lw-primary);
+  border: 1px solid var(--lw-primary);
   background-color: transparent;
   cursor: pointer;
   transition: 0.3s;
   &:hover {
     color: #000;
-    background-color: var(--primary-color);
+    background-color: var(--lw-primary);
   }
 }
 </style>

@@ -33,7 +33,7 @@ use([cssPlugin, colorPlugin, relativePlugin, svgPlugin, interpPlugin]);
 ## 使用
 
 ```js
-import { createAnimation } from "lwa";
+import lwa from "lwa";
 
 createAnimation("#el", {
   translateX: 200,

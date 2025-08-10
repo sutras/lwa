@@ -64,7 +64,7 @@ const getOfsetStyle = (begin: number) => {
   display: flex;
   margin-bottom: 3px;
   height: calc(1rem + 4px);
-  background-color: rgba(var(--primary-color-rgb), 0.15);
+  background-color: rgba(var(--lw-primary-rgb), 0.15);
 }
 
 .tween-prop {
@@ -76,13 +76,13 @@ const getOfsetStyle = (begin: number) => {
   align-items: center;
   height: 1rem;
   padding: 0 3px;
-  border-radius: var(--rounded-sm);
-  font-size: var(--text-xs);
+  border-radius: var(--lw-rounded-sm);
+  font-size: var(--lw-text-xs);
   line-height: 0;
   font-weight: 300;
   color: #fff;
-  --bg-color: #10b981;
-  background-color: var(--bg-color);
+  --lw-body-bg: #10b981;
+  background-color: var(--lw-body-bg);
 
   &::after {
     content: "";
@@ -92,7 +92,7 @@ const getOfsetStyle = (begin: number) => {
     transform: translateY(-50%);
     width: 0;
     height: 0;
-    border-left: 4px solid var(--bg-color);
+    border-left: 4px solid var(--lw-body-bg);
     border-top: 4px solid transparent;
     border-bottom: 4px solid transparent;
   }

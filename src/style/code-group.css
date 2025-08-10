@@ -1,0 +1,72 @@
+.code-group {
+  margin-bottom: 16px;
+}
+
+.code-group .tabs {
+  position: relative;
+  display: flex;
+  margin-right: -24px;
+  margin-left: -24px;
+  padding: 0 12px;
+  background-color: var(--lw-primary-bg-subtle);
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-shadow: inset 0 -1px var(--lw-border-color);
+}
+
+@media (min-width: 640px) {
+  .code-group .tabs {
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: var(--lw-rounded-lg) var(--lw-rounded-lg) 0 0;
+  }
+}
+
+.code-group .tabs input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.code-group .tabs label {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  padding: 0 12px;
+  line-height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.code-group .tabs label::after {
+  position: absolute;
+  right: 8px;
+  bottom: -1px;
+  left: 8px;
+  z-index: 1;
+  height: 2px;
+  border-radius: 2px;
+  content: "";
+  background-color: transparent;
+  transition: background-color 0.25s;
+}
+
+.code-group input:checked + label::after {
+  background-color: var(--lw-primary);
+}
+
+.code-group div[class*="language-"] {
+  position: relative;
+  display: none;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.code-group div[class*="language-"].active {
+  display: block;
+}

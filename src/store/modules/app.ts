@@ -1,4 +1,4 @@
-import lwa from "@/lib";
+import lwa from "@/lib/index.full";
 import { defineStore } from "pinia";
 
 export const useAppStore = defineStore("app", {

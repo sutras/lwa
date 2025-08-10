@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "./prism.css";
+@import "./var.css";
+@import "./reset.css";
+@import "./copy.css";
+@import "./code-group.css";
+@import "./docs.css";

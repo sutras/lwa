@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import lwa from "@/lib";
+import lwa from "lwa";
 import { useLwaContext } from "@/useLwaContext";
 import Demo from "@/components/Demo.vue";
 

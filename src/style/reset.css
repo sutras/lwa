@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin-top: 30px;
+  font-size: var(--lw-text-xl);
+}
+
+h3 {
+  margin-top: 20px;
+  font-size: var(--lw-text-lg);
+}
+
+h2,
+h3 {
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 16px;
+}

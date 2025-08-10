@@ -28,7 +28,7 @@ const route = useRoute();
 const menus = computed(() => {
   return router.options.routes[0].children?.map((route) => {
     return {
-      title: route.name,
+      title: route.meta?.title as string,
       children: route.children?.map((route) => {
         return {
           title: route.meta?.title,
@@ -41,7 +41,7 @@ const menus = computed(() => {
 
 const onClick = (name: string) => {
   router.push({
-    name: name,
+    name,
   });
 };
 
@@ -78,7 +78,7 @@ watch(
 }
 .menu-group-title {
   margin-bottom: 0.5rem;
-  font-size: var(--text-sm);
+  font-size: var(--lw-text-sm);
 }
 .menu-item {
   padding-left: 1rem;
@@ -88,7 +88,7 @@ watch(
     color: #eee;
   }
   &.active {
-    color: var(--primary-color);
+    color: var(--lw-primary);
   }
 }
 </style>

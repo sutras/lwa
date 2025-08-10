@@ -18,7 +18,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import Scale from "./Scale.vue";
 import Cursor from "./Cursor.vue";
 import Layer from "./Layer.vue";
-import lwa from "@/lib";
+import lwa from "lwa";
 
 const appStore = useAppStore();
 
@@ -53,7 +53,10 @@ const onChange = () => {};
 
 <style scoped>
 .timeline-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
   padding: 1rem;
+  border-bottom: 1px solid var(--lw-border-color);
 }
 .timeline {
   position: relative;

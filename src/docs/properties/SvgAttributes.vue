@@ -20,7 +20,7 @@
         <polygon
           points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100"
           style="filter: url(#displacementFilter)"
-          fill="var(--primary-color)"
+          fill="var(--lw-primary)"
         ></polygon>
       </svg>
     </div>
@@ -29,9 +29,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import lwa from "@/lib";
 import { useLwaContext } from "@/useLwaContext";
 import Demo from "@/components/Demo.vue";
+import lwa from "lwa";
 
 const name = "SvgAttributes";
 const timeline = ref();

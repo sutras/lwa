@@ -1,5 +1,5 @@
 <template>
-  <div class="demos" ref="demosRef">
+  <div ref="demosRef" class="demos">
     <div v-for="(demoGroup, i) in demoGroups" :key="i">
       <div class="demos-title">{{ demoGroup.title }}</div>
       <component v-for="demo in demoGroup.children" :is="demo" />
@@ -27,7 +27,7 @@ const router = useRouter();
 const demoGroups = computed(() => {
   return router.options.routes[0].children?.map((route) => {
     return {
-      title: route.name,
+      title: route.meta?.title,
       children: route.children?.map((route) => {
         return mapModules[route.name as string];
       }),
@@ -57,11 +57,11 @@ watch(demosRef, () => {
   align-items: center;
   height: var(--nav-height);
   padding: 0 1rem;
-  font-size: var(--text-lg);
+  font-size: var(--lw-text-lg);
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--lw-primary);
   text-align: left;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--lw-border-color);
+  background-color: var(--lw-body-bg);
 }
 </style>

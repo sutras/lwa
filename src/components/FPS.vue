@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import lwa from "@/lib";
+import lwa from "lwa";
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const fps = ref(0);
@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
   width: 80px;
   height: 30px;
   color: #fff;
-  border-radius: var(--rounded-lg);
+  border-radius: var(--lw-rounded-lg);
   background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

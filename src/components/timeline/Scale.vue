@@ -53,6 +53,6 @@ const scales = computed(() => {
   transform: translateX(-50%);
   color: #fff;
   user-select: none;
-  font-size: var(--text-sm);
+  font-size: var(--lw-text-sm);
 }
 </style>

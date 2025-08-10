@@ -85,15 +85,15 @@ onBeforeUnmount(() => {
 .cursor-head {
   width: 7px;
   height: 30px;
-  background-color: rgba(var(--primary-color-rgb), 0.2);
-  border: 1px solid var(--primary-color);
+  background-color: rgba(var(--lw-primary-rgb), 0.2);
+  border: 1px solid var(--lw-primary);
 }
 .cursor-line {
   position: absolute;
   top: 30px;
+  bottom: -10px;
   left: 3px;
   width: 1px;
-  height: 100%;
-  background-color: var(--primary-color);
+  background-color: var(--lw-primary);
 }
 </style>

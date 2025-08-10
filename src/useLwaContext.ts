@@ -1,5 +1,5 @@
 import { onBeforeUnmount, onMounted } from "vue";
-import lwa from "@/lib";
+import lwa from "@/lib/index.full";
 
 export function useLwaContext(
   callback: () => ReturnType<typeof lwa> | undefined | void | (() => void)

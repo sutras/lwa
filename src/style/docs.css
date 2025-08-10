@@ -1,0 +1,28 @@
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-size: var(--lw-text-base);
+  color: var(--lw-text-color);
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+  background-color: var(--lw-border-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.block {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background-color: var(--lw-primary);
+}
+.block.small {
+  width: 20px;
+  height: 20px;
+}

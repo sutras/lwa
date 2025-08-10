@@ -1,9 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./index.css";
+import "./style/index.css";
 import { registerStore } from "./store";
 import { createBlockColorsStyle } from "./block-colors";
 import { registerRouter } from "./router";
+
+import "virtual:svg-icons-register";
 
 createBlockColorsStyle();
 
