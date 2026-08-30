@@ -66,7 +66,10 @@ function parseTarget(target: string | unknown[] | object) {
   return Array.from(new Set(result));
 }
 
-function getFuncValue<T>(value: unknown, animatedTarget: AnimatedTarget): T {
+function getFuncValue<T>(
+  value: T | ((...args: any[]) => T),
+  animatedTarget: AnimatedTarget,
+) {
   return isFunction(value)
     ? value(animatedTarget.target, animatedTarget.index, animatedTarget.total)
     : value;
@@ -82,8 +85,8 @@ function getTweenValue(position: number, tween: Tween) {
       position <= begin + delay
         ? from
         : position >= begin + delay + duration
-        ? to
-        : from + easing((position - begin - delay) / duration) * (to - from);
+          ? to
+          : from + easing((position - begin - delay) / duration) * (to - from);
 
     if (round) {
       value = Math.round(value * round) / round;
@@ -104,7 +107,7 @@ function getAnimatedTargets(targets: object[]) {
 
 function structureValue(
   value: Value,
-  animatedTarget: AnimatedTarget
+  animatedTarget: AnimatedTarget,
 ): ObjectValue[] {
   value = getFuncValue<SingleValue | SingleValue[]>(value, animatedTarget);
 
@@ -124,7 +127,7 @@ function normalizeTweens(
   options: RequiredTweenOptions,
   beginTime: number,
   animationProperties: Record<string, Tween[]>,
-  averageDuration: number
+  averageDuration: number,
 ) {
   const l = objectValues.length;
   let endTime = beginTime || 0;
@@ -134,27 +137,27 @@ function normalizeTweens(
   function normalizeTween(
     objectValue: ObjectValue,
     index: number,
-    prevTween: Tween | undefined
+    prevTween: Tween | undefined,
   ) {
     const duration = getFuncValue<number>(
       objectValue.duration ?? averageDuration,
-      animatedTarget
+      animatedTarget,
     );
     const delay = getFuncValue<number>(
       objectValue.delay ?? (index === 0 ? options.delay : 0),
-      animatedTarget
+      animatedTarget,
     );
     const endDelay = getFuncValue<number>(
       objectValue.endDelay ?? (index === l - 1 ? options.endDelay : 0),
-      animatedTarget
+      animatedTarget,
     );
     const easing = getFuncValue<(k: number) => number>(
       getEasing(objectValue.easing ?? options.easing),
-      animatedTarget
+      animatedTarget,
     );
     const round = getFuncValue<number>(
       objectValue.round ?? options.round,
-      animatedTarget
+      animatedTarget,
     );
 
     const total = delay + duration + endDelay;
@@ -235,7 +238,7 @@ function normalizeTweens(
   const tweens = objectValues
     .map(
       (objectValue, index) =>
-        (prevTween = normalizeTween(objectValue, index, prevTween))
+        (prevTween = normalizeTween(objectValue, index, prevTween)),
     )
     .sort((a, b) => a.begin - b.begin);
 
@@ -251,7 +254,7 @@ function getOneKeyframeTween(
   options: RequiredTweenOptions,
   beginTime: number,
   animationProperties: Record<string, Tween[]>,
-  averageDuration: number
+  averageDuration: number,
 ) {
   let props: { [p: string]: { endTime: number; tweens: Tween[] } } = {};
 
@@ -265,7 +268,7 @@ function getOneKeyframeTween(
         options,
         beginTime,
         animationProperties,
-        averageDuration
+        averageDuration,
       );
     }
   }
@@ -276,7 +279,7 @@ function getOneKeyframeTween(
 function getAnimationProperties(
   animatedTarget: AnimatedTarget,
   keyframes: Properties[],
-  options: RequiredTweenOptions
+  options: RequiredTweenOptions,
 ) {
   const animationProperties: Record<string, Tween[]> = {};
   const averageDuration =
@@ -290,13 +293,13 @@ function getAnimationProperties(
       options,
       endTime,
       animationProperties,
-      averageDuration
+      averageDuration,
     );
 
     for (let p in oneKeyframeTween) {
       endTime = Math.max(endTime, oneKeyframeTween[p].endTime);
       animationProperties[p] = (animationProperties[p] || []).concat(
-        oneKeyframeTween[p].tweens
+        oneKeyframeTween[p].tweens,
       );
     }
   });
@@ -350,18 +353,18 @@ function createAnimation(tweens: Tween[]) {
 function getAnimations(
   animationTargets: AnimatedTarget[],
   keyframes: Properties[],
-  options: RequiredTweenOptions
+  options: RequiredTweenOptions,
 ) {
   return animationTargets
     .map((animatedTarget) => {
       const animationProperties = getAnimationProperties(
         animatedTarget,
         keyframes,
-        options
+        options,
       );
 
       return Object.keys(animationProperties).map((p) =>
-        createAnimation(animationProperties[p])
+        createAnimation(animationProperties[p]),
       );
     })
     .flat();
@@ -378,19 +381,19 @@ const defaultTweenOptions: RequiredTweenOptions = {
 function createAnimations(
   target: string | unknown[] | object,
   keyframes: Properties | Properties[],
-  options?: TweenOptions
+  options?: TweenOptions,
 ) {
   const tweenOptions = Object.assign({}, defaultTweenOptions, options);
   return getAnimations(
     getAnimatedTargets(parseTarget(target)),
     isArray(keyframes) ? keyframes : [keyframes],
-    tweenOptions
+    tweenOptions,
   );
 }
 
 function withFrom(
   from: MayFunctionValue<BaseValue>,
-  to: MayFunctionValue<BaseValue>
+  to: MayFunctionValue<BaseValue>,
 ) {
   return new WithFromValue(from, to);
 }

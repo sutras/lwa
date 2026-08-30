@@ -21,6 +21,12 @@ body {
   width: 30px;
   height: 30px;
   background-color: var(--lw-primary);
+  color: #fff;
+
+  &.input {
+    width: 100px;
+    text-align: center;
+  }
 }
 .block.small {
   width: 20px;

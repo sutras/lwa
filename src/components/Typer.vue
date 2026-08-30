@@ -38,13 +38,13 @@ useLwaContext(() => {
       value: 1,
     },
     {
-      duration: props.text.length * 150,
+      duration: props.text.length * 100,
       easing: "linear",
       update(_, progress) {
         end.value = Math.floor(progress * props.text.length);
       },
-      autoplay: false,
-    }
+      autoplay: true,
+    },
   );
 
   emit("create", timeline.value);

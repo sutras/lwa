@@ -22,3 +22,15 @@ h3 {
 p {
   margin-bottom: 16px;
 }
+
+ul,
+ol {
+  margin-bottom: 16px;
+  padding-left: 2.5em;
+}
+ul {
+  list-style: unset;
+}
+li {
+  margin-bottom: 4px;
+}

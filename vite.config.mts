@@ -43,7 +43,7 @@ export default defineConfig(({ command }) => ({
       lwa: path.resolve(__dirname, "./src/lib/index.full.ts"),
     },
   },
-  base: "/lwa-docs/",
+  base: "/",
   build: {
     outDir: "docs",
   },

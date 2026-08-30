@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: "start",
         name: "start",
-        redirect: { name: "CssSelector" },
+        redirect: { name: "install" },
         component: () => import("@/components/Empty.vue"),
         meta: {
           title: "开始",
@@ -77,7 +77,7 @@ const routes: RouteRecordRaw[] = [
             name: "ArrayType",
             component: () => import("@/docs/target/ArrayType.md"),
             meta: {
-              title: "类数组对象",
+              title: "数组类型",
             },
           },
         ],

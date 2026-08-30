@@ -1,3 +1,29 @@
+`easing` 设置动画的缓动函数，默认值为 `"easeInOutQuad"`。可以传入字符串名称来使用内置缓动函数，也可以传入一个自定义函数 `(k: number) => number`。
+
+::: code-group
+
+```html
+<div class="block"></div>
+```
+
+```js
+lwa(
+  `.block`,
+  {
+    translateX: 200,
+  },
+  {
+    autoplay: false,
+    duration: 1000,
+    easing: "easeOutBounce",
+  }
+);
+```
+
+:::
+
+内置缓动函数列表如下：
+
 <div class="easings">
   <Easing v-for="name in easingNames" :key="name" :name="name" />
 </div>
