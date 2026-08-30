@@ -1,6 +1,6 @@
 {
   "name": "lwa",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "轻量级动画库",
   "main": "./dist/lwa.cjs",
   "module": "./dist/lwa.mjs",

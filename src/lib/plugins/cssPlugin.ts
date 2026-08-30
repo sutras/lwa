@@ -34,33 +34,54 @@ const transformValues = [
 
 type TransformValues = (typeof transformValues)[number];
 
-const transformValuesMap = arrayToObject(transformValues as any);
+let transformValuesMap: null | Record<string, true> = null;
 
-const optionalUnitProperties = arrayToObject([
-  "columnCount",
-  "fillOpacity",
-  "fontSizeAdjust",
-  "fontWeight",
-  "lineHeight",
-  "opacity",
-  "orphans",
-  "widows",
-  "zIndex",
-  "zoom",
-  "scale",
-  "scaleX",
-  "scaleY",
-  "scaleZ",
-  "order",
-  "flexGrow",
-  "flexShrink",
-  "scrollLeft",
-  "scrollTop",
-  "strokeDashoffset",
-  "strokeDasharray",
-]);
+function isTransform(prop: string) {
+  if (!transformValuesMap) {
+    transformValuesMap = arrayToObject(transformValues as any);
+  }
+  return !!transformValuesMap[prop];
+}
 
-const domDotAttributes = arrayToObject(["value"]);
+let optionalUnitProperties: null | Record<string, true> = null;
+
+function isOptionalUnitProperty(prop: string) {
+  if (!optionalUnitProperties) {
+    optionalUnitProperties = arrayToObject([
+      "columnCount",
+      "fillOpacity",
+      "fontSizeAdjust",
+      "fontWeight",
+      "lineHeight",
+      "opacity",
+      "orphans",
+      "widows",
+      "zIndex",
+      "zoom",
+      "scale",
+      "scaleX",
+      "scaleY",
+      "scaleZ",
+      "order",
+      "flexGrow",
+      "flexShrink",
+      "scrollLeft",
+      "scrollTop",
+      "strokeDashoffset",
+      "strokeDasharray",
+    ]);
+  }
+  return optionalUnitProperties[prop];
+}
+
+let domDotAttributes: null | Record<string, true> = null;
+
+function isDomDotAttribute(attr: string) {
+  if (!domDotAttributes) {
+    domDotAttributes = arrayToObject(["value"]);
+  }
+  return domDotAttributes[attr];
+}
 
 function arrayToObject(array: string[]) {
   const map: Record<string, true> = {};
@@ -90,7 +111,7 @@ function camalCase(target: string) {
 
 export function getPrefixedCssProp(
   name: CSSStyleDeclarationKeys,
-  host?: object
+  host?: object,
 ) {
   if (cssProps[name]) {
     return cssProps[name];
@@ -103,7 +124,7 @@ export function getPrefixedCssProp(
     let fitName = prefix
       ? prefix + pascalCase(String(name))
       : camalCase(String(name));
-    if (fitName in html.style) {
+    if (fitName in host) {
       return (cssProps[name] = fitName as CSSStyleDeclarationKeys);
     }
   }
@@ -112,13 +133,13 @@ export function getPrefixedCssProp(
 
 function combinedWithUnit(prop: string, value: number | string) {
   return (
-    value + (!Number.isNaN(+value) && !optionalUnitProperties[prop] ? "px" : "")
+    value + (!Number.isNaN(+value) && !isOptionalUnitProperty(prop) ? "px" : "")
   );
 }
 
 function getStyle(
   elem: HTMLElement | SVGElement,
-  prop: CSSStyleDeclarationKeys
+  prop: CSSStyleDeclarationKeys,
 ) {
   return window.getComputedStyle(elem)[getPrefixedCssProp(prop)] as string;
 }
@@ -126,25 +147,25 @@ function getStyle(
 function setStyle(
   elem: HTMLElement | SVGElement,
   prop: CSSStyleDeclarationKeys,
-  value: number | string
+  value: number | string,
 ) {
   (elem.style as any)[getPrefixedCssProp(prop)] = combinedWithUnit(
     String(prop),
-    value
+    value,
   );
 }
 
 function setStyleIgnoreUnit(
   elem: HTMLElement | SVGElement,
   prop: CSSStyleDeclarationKeys,
-  value: number | string
+  value: number | string,
 ) {
   elem.style[getPrefixedCssProp(prop) as any] = value as string;
 }
 
 function setStyleFromTransformMap(
   elem: HTMLElement | SVGElement,
-  map: Map<string, string>
+  map: Map<string, string>,
 ) {
   let value = "";
   map.forEach((val, key) => (value += key + "(" + val + ") "));
@@ -154,12 +175,12 @@ function setStyleFromTransformMap(
 interface CssStyleHook {
   get: (
     elem: HTMLElement | SVGElement,
-    prop: CSSStyleDeclarationKeys
+    prop: CSSStyleDeclarationKeys,
   ) => string;
   set: (
     elem: HTMLElement | SVGElement,
     prop: CSSStyleDeclarationKeys,
-    value: string | number
+    value: string | number,
   ) => void;
 }
 
@@ -171,7 +192,7 @@ type CssHooks = { _default: CssStyleHook } & {
     set: (
       elem: HTMLElement | SVGElement,
       prop: Key,
-      value: string | number
+      value: string | number,
     ) => void;
   };
 } & {
@@ -180,61 +201,70 @@ type CssHooks = { _default: CssStyleHook } & {
     set: (
       elem: HTMLElement | SVGElement,
       prop: string,
-      value: number | string
+      value: number | string,
     ) => void;
   };
 };
 
-const cssHooks: CssHooks = {
-  _default: {
-    get(elem, prop) {
-      return getStyle(elem, prop);
-    },
-    set(elem, prop, value) {
-      setStyle(elem, prop, value);
-    },
-  },
-};
+let cssHooks: null | CssHooks = null;
 
-(["scrollTop", "scrollLeft"] as const).forEach((item) => {
-  cssHooks[item] = {
-    get(elem, prop) {
-      return (elem as any)[prop];
-    },
-    set(elem, prop, value) {
-      (elem as any)[prop] = value;
-    },
-  };
-});
+function getCssHook(
+  prop: CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement,
+) {
+  if (!cssHooks) {
+    cssHooks = {
+      _default: {
+        get(elem, prop) {
+          return getStyle(elem, prop);
+        },
+        set(elem, prop, value) {
+          setStyle(elem, prop, value);
+        },
+      },
+    };
 
-transformValues.forEach((item) => {
-  cssHooks[item] = {
-    get(elem, prop) {
-      return getTransformValuesMap(elem).get(prop) || "";
-    },
-    set(elem, prop, value) {
-      const transformValuesMap = getTransformValuesMap(elem);
-      transformValuesMap.set(prop, combinedWithUnit(prop, value));
-      sortTransformValues(transformValuesMap);
-      setStyleFromTransformMap(elem, transformValuesMap);
-    },
-  };
-});
+    (["scrollTop", "scrollLeft"] as const).forEach((item) => {
+      cssHooks![item] = {
+        get(elem, prop) {
+          return (elem as any)[prop];
+        },
+        set(elem, prop, value) {
+          (elem as any)[prop] = value;
+        },
+      };
+    });
+
+    transformValues.forEach((item) => {
+      cssHooks![item] = {
+        get(elem, prop) {
+          return getTransformValuesMap(elem).get(prop) || "";
+        },
+        set(elem, prop, value) {
+          const transformValuesMap = getTransformValuesMap(elem);
+          transformValuesMap.set(prop, combinedWithUnit(prop, value));
+          sortTransformValues(transformValuesMap);
+          setStyleFromTransformMap(elem, transformValuesMap);
+        },
+      };
+    });
+  }
+  return cssHooks[prop] || cssHooks._default;
+}
 
 export function css(
   elem: HTMLElement | SVGElement,
-  prop: CSSStyleDeclarationKeys
+  prop: CSSStyleDeclarationKeys,
 ): string;
 
 export function css(
   elem: HTMLElement | SVGElement,
-  prop: keyof HTMLElement | keyof SVGElement
+  prop: keyof HTMLElement | keyof SVGElement,
 ): number;
 
 export function css(
   elem: HTMLElement | SVGElement,
   prop: CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement,
-  value: string | number
+  value: string | number,
 ): void;
 
 export function css(
@@ -242,7 +272,7 @@ export function css(
   prop: Record<
     CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement,
     string | number
-  >
+  >,
 ): void;
 
 export function css(
@@ -255,7 +285,7 @@ export function css(
         CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement,
         string | number
       >,
-  value?: string | number
+  value?: string | number,
 ) {
   if (isObject(prop)) {
     for (let i in prop) {
@@ -264,29 +294,22 @@ export function css(
         i as CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement,
         prop[
           i as CSSStyleDeclarationKeys | keyof HTMLElement | keyof SVGElement
-        ]
+        ],
       );
     }
   } else if (value === undefined) {
-    return ((cssHooks[prop] && cssHooks[prop].get) || cssHooks._default.get)(
-      elem,
-      prop as never
-    );
+    return getCssHook(prop).get(elem, prop as never);
   } else {
-    ((cssHooks[prop] && cssHooks[prop].set) || cssHooks._default.set)(
-      elem,
-      prop as never,
-      value
-    );
+    getCssHook(prop).set(elem, prop as never, value);
   }
 }
 
 function getDefaultUnit(prop: string) {
   return /rotate|skew/.test(prop)
     ? "deg"
-    : optionalUnitProperties[prop]
-    ? ""
-    : "px";
+    : isOptionalUnitProperty(prop)
+      ? ""
+      : "px";
 }
 
 function getTransformValuesMap(target: HTMLElement | SVGElement) {
@@ -327,7 +350,7 @@ function parseUnit(value: string) {
 function convertPxToUnit(
   target: HTMLElement | SVGElement,
   value: string | number,
-  unit: string
+  unit: string,
 ) {
   const baseline = 100;
 
@@ -351,7 +374,7 @@ function convertPxToUnit(
 function getCSSOriginalValue(
   target: HTMLElement | SVGElement,
   prop: CSSStyleDeclarationKeys,
-  unit: string
+  unit: string,
 ) {
   let value = getStyle(target, prop);
   return unit && isString(value) ? convertPxToUnit(target, value, unit) : value;
@@ -360,7 +383,7 @@ function getCSSOriginalValue(
 function getTransformOriginalValue(
   target: HTMLElement | SVGElement,
   prop: string,
-  unit: string
+  unit: string,
 ) {
   let value =
     getTransformValuesMap(target).get(prop) ||
@@ -377,7 +400,7 @@ function getOriginalValue(
   target: HTMLElement | SVGElement,
   prop: string,
   unit: string,
-  propType: "attr" | "css" | "trans"
+  propType: "attr" | "css" | "trans",
 ) {
   switch (propType) {
     case "trans":
@@ -393,14 +416,10 @@ function getPropType(target: HTMLElement | SVGElement, prop: string) {
   return isTransform(prop)
     ? "trans"
     : getPrefixedCssProp(prop as CSSStyleDeclarationKeys)
-    ? "css"
-    : !domDotAttributes[prop] && target.hasAttribute(prop)
-    ? "attr"
-    : "";
-}
-
-function isTransform(prop: string) {
-  return !!transformValuesMap[prop];
+      ? "css"
+      : !isDomDotAttribute(prop) && target.hasAttribute(prop)
+        ? "attr"
+        : "";
 }
 
 declare module "../core" {

@@ -1,6 +1,3 @@
-import getAnimationFrameController from "./animationFrameController";
-
-const { request, cancel } = getAnimationFrameController();
 const ticks = new Set<() => void>();
 let id = 0;
 let paused = true;
@@ -20,21 +17,21 @@ function step() {
   } else {
     new Set(ticks).forEach((tick) => tick());
 
-    id = request(step);
+    id = requestAnimationFrame(step);
   }
 }
 
 function run() {
   if (paused) {
     paused = false;
-    id = request(step);
+    id = requestAnimationFrame(step);
   }
 }
 
 function stop() {
   if (!paused) {
     paused = true;
-    cancel(id);
+    cancelAnimationFrame(id);
   }
 }
 
