@@ -6,6 +6,8 @@
   --lw-gemel: #10b981;
   --lw-body-bg: hsl(0, 5%, 15%);
   --lw-border-color: hsl(0, 10%, 1%);
+  --lw-table-border: hsl(0, 8%, 32%);
+  --lw-table-stripe: rgba(255, 255, 255, 0.02);
   --lw-text-xs: 10px;
   --lw-text-sm: 12px;
   --lw-text-base: 14px;

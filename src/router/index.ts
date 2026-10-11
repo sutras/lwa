@@ -444,6 +444,25 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: "plugins",
+        name: "plugins",
+        redirect: { name: "WritePlugin" },
+        component: () => import("@/components/Empty.vue"),
+        meta: {
+          title: "插件",
+        },
+        children: [
+          {
+            path: "WritePlugin",
+            name: "WritePlugin",
+            component: () => import("@/docs/plugins/WritePlugin.md"),
+            meta: {
+              title: "自定义插件",
+            },
+          },
+        ],
+      },
     ],
   },
   {

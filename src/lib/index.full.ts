@@ -7,8 +7,11 @@ import {
   withFrom,
   random,
   use,
+  definePlugin,
+  TERMINATE,
   cssPlugin,
   colorPlugin,
+  namedColorPlugin,
   relativePlugin,
   svgPlugin,
   interpPlugin,
@@ -18,7 +21,14 @@ import {
   setDashoffset,
 } from ".";
 
-use([cssPlugin, colorPlugin, relativePlugin, svgPlugin, interpPlugin]);
+use([
+  cssPlugin,
+  colorPlugin,
+  namedColorPlugin,
+  relativePlugin,
+  svgPlugin,
+  interpPlugin,
+]);
 
 export default Object.assign(
   ((...args: Parameters<typeof createAnimation>) => {
@@ -33,10 +43,12 @@ export default Object.assign(
     withFrom,
     random,
     use,
+    definePlugin,
+    TERMINATE,
     css,
     getPrefixedCssProp,
     geometry,
     setDashoffset,
     timeline: createTimeline,
-  }
+  },
 );

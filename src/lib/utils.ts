@@ -6,11 +6,11 @@ export const rUnit =
   /%|px|rpx|em|rem|vw|vh|deg|rad|turn|ex|ch|vmin|vmax|pc|pt|in|cm|mm/;
 export const rCssNumVal = new RegExp(
   "^([+\\-*/%]=|)(" + rNum.source + ")(" + rUnit.source + "|)$",
-  "i"
+  "i",
 );
 export const rNums = new RegExp(rNum.source, "g");
 export const rTimelinePos = new RegExp(
-  "^([<>]|)([+-]=|)(" + rNum.source + "|)(%|)$"
+  "^([<>]|)([+-]=|)(" + rNum.source + "|)(%|)$",
 );
 
 export function isNumber(target: unknown) {
@@ -30,7 +30,7 @@ export function isFunction(target: unknown) {
 }
 
 export function isArrayLike(
-  target: unknown
+  target: unknown,
 ): target is { length: number } & object {
   let l: number;
   return (
@@ -42,10 +42,6 @@ export function isArrayLike(
 
 export function isArray(target: unknown) {
   return Array.isArray(target);
-}
-
-export function isSvg(target: unknown): target is SVGElement {
-  return typeof SVGElement !== "undefined" && target instanceof SVGElement;
 }
 
 export function random(min: number, max: number) {
@@ -63,7 +59,7 @@ export function toArray<T>(target: T) {
 export const defaultEasing = "easeInOutQuad";
 
 export function getEasing(
-  ease: FunctionalValue<(k: number) => number> | keyof typeof easings
+  ease: FunctionalValue<(k: number) => number> | keyof typeof easings,
 ) {
   return isFunction(ease)
     ? ease

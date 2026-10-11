@@ -29,6 +29,7 @@ import {
   use,
   cssPlugin,
   colorPlugin,
+  namedColorPlugin,
   relativePlugin,
   svgPlugin,
   interpPlugin,
@@ -37,6 +38,9 @@ import {
 
 // 注册所需插件
 use([cssPlugin, colorPlugin, relativePlugin, svgPlugin, interpPlugin]);
+
+// 只在需要 CSS 颜色名（如 "red"、"rebeccapurple"）时才注册它
+use(namedColorPlugin);
 
 createAnimation("#el", {
   translateX: 200,
@@ -73,18 +77,38 @@ lwa("#el", {
 
 ## 基础用法
 
+以下示例使用模块化入口（`lwa()` 这种可调用写法只在完整版 / CDN 提供，见上一节）。
+
 ```js
-import lwa from "lwa";
+import {
+  use,
+  createAnimation,
+  createTimeline,
+  cssPlugin,
+  colorPlugin,
+  namedColorPlugin,
+  relativePlugin,
+  svgPlugin,
+  interpPlugin,
+} from "lwa";
+
+use([
+  cssPlugin,
+  colorPlugin,
+  namedColorPlugin,
+  relativePlugin,
+  svgPlugin,
+  interpPlugin,
+]);
 
 // 创建单个动画
-const animation = lwa("#el", {
+const animation = createAnimation("#el", {
   translateX: 200,
   rotate: 360,
 });
 
 // 时间轴
-lwa
-  .timeline()
+createTimeline()
   .add("#el1", { translateX: 200 })
   .add("#el2", { translateX: 200 }, "<");
 ```

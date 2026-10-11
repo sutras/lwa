@@ -1,6 +1,21 @@
 import { definePlugin } from "../definePlugin";
-import { namedColors } from "../namedColors";
 import { isNumber, isString } from "../utils";
+
+/**
+ * CSS 颜色名映射表由 `namedColorPlugin` 注入。
+ * 默认不打包这张表，不需要颜色名的用户可省下约 1.3 kB(gzip) 的体积。
+ */
+let namedColors: Record<string, string> | null = null;
+
+function setNamedColors(map: Record<string, string>) {
+  namedColors = map;
+}
+
+function hasNamedColor(name: string) {
+  return (
+    !!namedColors && Object.prototype.hasOwnProperty.call(namedColors, name)
+  );
+}
 
 function hexToRgb(hex: string) {
   let r = /[0-9a-f]{2}/gi,
@@ -70,8 +85,8 @@ function colorToRgba(val: string) {
     arr[1] /= 100;
     arr[2] /= 100;
     rgba = hslToRgb(...(arr as [number, number, number])).concat(arr[3]);
-  } else if (namedColors.hasOwnProperty((val = val.toLowerCase()))) {
-    rgba = hexToRgb(namedColors[val as keyof typeof namedColors]);
+  } else if (hasNamedColor((val = val.toLowerCase()))) {
+    rgba = hexToRgb(namedColors![val]);
   } else {
     rgba = [0, 0, 0, 1];
   }
@@ -94,7 +109,7 @@ function colorToRgba(val: string) {
 // https://developer.mozilla.org/zh-CN/docs/Web/CSS/color
 function isColor(value: string) {
   return (
-    namedColors.hasOwnProperty(String(value).toLowerCase()) ||
+    hasNamedColor(String(value).toLowerCase()) ||
     /^(?:rgb|hsl|#(?:[0-9a-f]{6}|[0-9a-f]{3})$)/i.test(value)
   );
 }
@@ -124,3 +139,5 @@ export default definePlugin<{ color: {} }>({
     }
   },
 });
+
+export { setNamedColors };

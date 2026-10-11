@@ -1,4 +1,5 @@
 import {
+  TERMINATE,
   type Properties,
   type TweenOptions,
   type Tween,
@@ -29,11 +30,13 @@ import { easings, type Easings } from "./easings";
 import { stagger, type StaggerOptions } from "./stagger";
 import { ticker } from "./ticker";
 import { random } from "./utils";
+import { type Plugin, definePlugin } from "./definePlugin";
 
 import updatePlugin from "./plugins/updatePlugin";
 import initPlugin from "./plugins/initPlugin";
 import cssPlugin, { css, getPrefixedCssProp } from "./plugins/cssPlugin";
 import colorPlugin from "./plugins/colorPlugin";
+import namedColorPlugin from "./plugins/namedColorPlugin";
 import relativePlugin from "./plugins/relativePlugin";
 import svgPlugin, { geometry, setDashoffset } from "./plugins/svgPlugin";
 import interpPlugin from "./plugins/interpPlugin";
@@ -44,13 +47,14 @@ use(initPlugin);
 function createAnimation(
   target: string | unknown[] | object,
   keyframes: Properties | Properties[],
-  options?: TweenOptions & TimelineOptions
+  options?: TweenOptions & TimelineOptions,
 ) {
   return createTimeline(options).add(target, keyframes, options);
 }
 
 export {
   type Tween,
+  type Plugin,
   type Between,
   type TimelineEvent,
   type TimelineEventTarget,
@@ -81,8 +85,11 @@ export {
   withFrom,
   random,
   use,
+  definePlugin,
+  TERMINATE,
   cssPlugin,
   colorPlugin,
+  namedColorPlugin,
   relativePlugin,
   svgPlugin,
   interpPlugin,

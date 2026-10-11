@@ -1,6 +1,6 @@
 {
   "name": "lwa",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "轻量级动画库",
   "main": "./dist/lwa.cjs",
   "module": "./dist/lwa.mjs",
@@ -23,15 +23,30 @@
       "import": "./dist/lwa.mjs",
       "require": "./dist/lwa.cjs"
     },
+    "./core": {
+      "types": "./dist/lwa.slim.d.ts",
+      "import": "./dist/lwa.slim.es.js",
+      "require": "./dist/lwa.slim.umd.js",
+      "default": "./dist/lwa.slim.es.js"
+    },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
+  "sideEffects": [
+    "./dist/lwa.mjs",
+    "./dist/lwa.cjs",
+    "./dist/lwa.full.es.js",
+    "./dist/lwa.full.umd.js",
+    "./dist/lwa.slim.es.js",
+    "./dist/lwa.slim.umd.js"
+  ],
   "scripts": {
     "dev": "vite",
     "build:docs": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "deploy": "node deploy.mjs",
-    "buildDocsAndDeploy": "npm run build:docs && npm run deploy",
+    "deploy": "bash deploy.sh",
+    "deploy:only": "bash deploy.sh --skip-build",
+    "buildDocsAndDeploy": "npm run build:docs && npm run deploy:only",
     "build:dts": "node build-dts.mjs",
     "build:lib": "node build-lib.mjs && npm run build:dts"
   },
@@ -44,7 +59,6 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "consola": "^3.2.3",
     "fast-glob": "^3.3.3",
-    "gh-pages": "^6.1.1",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
     "markdown-it-async": "^2.2.0",

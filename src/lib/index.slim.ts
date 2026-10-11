@@ -1,4 +1,9 @@
-import { type Properties, type TweenOptions, type Easing } from "./common";
+import {
+  TERMINATE,
+  type Properties,
+  type TweenOptions,
+  type Easing,
+} from "./common";
 import {
   type Timeline,
   type TimelineOptions,
@@ -7,6 +12,7 @@ import {
 import { use, withFrom } from "./core";
 import { easings, type Easings } from "./easings";
 import { ticker } from "./ticker";
+import { type Plugin, definePlugin } from "./definePlugin";
 
 import updatePlugin from "./plugins/updatePlugin";
 import initPlugin from "./plugins/initPlugin";
@@ -17,7 +23,7 @@ use(initPlugin);
 function createAnimation(
   target: string | unknown[] | object,
   keyframes: Properties | Properties[],
-  options?: TweenOptions & TimelineOptions
+  options?: TweenOptions & TimelineOptions,
 ) {
   return createTimeline(options).add(target, keyframes, options);
 }
@@ -29,9 +35,12 @@ export {
   type TweenOptions,
   type Easings,
   type Easing,
+  type Plugin,
   createAnimation,
   createTimeline,
   ticker,
   easings,
   withFrom,
+  definePlugin,
+  TERMINATE,
 };

@@ -32,3 +32,25 @@ body {
   width: 20px;
   height: 20px;
 }
+
+/* markdown 表格 */
+.docs-body table {
+  width: 100%;
+  margin-bottom: 16px;
+  border-collapse: collapse;
+  font-size: var(--lw-text-base);
+}
+.docs-body th,
+.docs-body td {
+  padding: 8px 12px;
+  border: 1px solid var(--lw-table-border);
+  text-align: left;
+}
+.docs-body th {
+  background-color: var(--lw-primary-bg-subtle);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.docs-body tbody tr:nth-child(even) {
+  background-color: var(--lw-table-stripe);
+}

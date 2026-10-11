@@ -12,7 +12,6 @@ type CSSStyleDeclarationKeys = keyof Omit<
 
 const cssProps: Record<string, CSSStyleDeclarationKeys> = {};
 const prefixes = ["", "webkit", "Moz"];
-const html = document.documentElement;
 
 const transformValues = [
   "translateX",
@@ -117,7 +116,7 @@ export function getPrefixedCssProp(
     return cssProps[name];
   }
 
-  host = host || html.style;
+  host = host || document.documentElement.style;
 
   for (let i = 0, l = prefixes.length; i < l; i++) {
     const prefix = prefixes[i];
@@ -420,13 +419,6 @@ function getPropType(target: HTMLElement | SVGElement, prop: string) {
       : !isDomDotAttribute(prop) && target.hasAttribute(prop)
         ? "attr"
         : "";
-}
-
-declare module "../core" {
-  interface Lwa {
-    css: typeof css;
-    getPrefixedCssProp: typeof getPrefixedCssProp;
-  }
 }
 
 export default definePlugin<

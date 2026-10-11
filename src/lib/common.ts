@@ -9,7 +9,7 @@ export class WithFromValue extends SpecialValue {
   to: MayFunctionValue<BaseValue>;
   constructor(
     from: MayFunctionValue<BaseValue>,
-    to: MayFunctionValue<BaseValue>
+    to: MayFunctionValue<BaseValue>,
   ) {
     super();
     this.from = from;
@@ -29,18 +29,6 @@ export class SVGValue extends SpecialValue {
   }
 }
 
-export interface SVGPluginDataTo {
-  el: SVGGeometryElement;
-  prop: string;
-  totalLength: number;
-  sign: symbol;
-  type: symbol;
-}
-
-export interface SVGPluginData {
-  geometry: SVGPluginDataTo;
-}
-
 export type Easing =
   | keyof typeof easings
   | FunctionalValue<(k: number) => number>;
@@ -56,7 +44,7 @@ export interface AnimatedTarget {
 export type FunctionalValue<T> = (
   target: object,
   index: number,
-  total: number
+  total: number,
 ) => T;
 
 export type MayFunctionValue<T> = T | FunctionalValue<T>;

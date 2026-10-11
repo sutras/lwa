@@ -14,6 +14,7 @@ dist-ssr
 *.local
 /temp
 /docs
+/deploy.sh
 
 # Editor directories and files
 .idea
